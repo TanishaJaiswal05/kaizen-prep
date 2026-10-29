@@ -1,16 +1,35 @@
-# React + Vite
+# Kaizen Prep — Web
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React client for [Kaizen Prep](../README.md). Vite + React 19 + React Router 7, styled with SCSS.
 
-Currently, two official plugins are available:
+## Run
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+```bash
+npm install
+cp .env.example .env   # VITE_API_URL, defaults to http://localhost:3000
+npm run dev
+```
 
-## React Compiler
+## Scripts
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+| Command | Purpose |
+| --- | --- |
+| `npm run dev` | Start the dev server on port 5173 |
+| `npm run build` | Production build into `dist/` |
+| `npm run preview` | Preview the production build |
+| `npm run lint` | ESLint |
 
-## Expanding the ESLint configuration
+## Structure
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```
+src/
+  components/          # shared UI primitives
+  pages/               # route-level pages outside the feature folders
+  features/
+    auth/              # context, useAuth hook, api service, Login/Register, Protected
+    interview/         # context, useInterview hook, api service, Home/Interview
+```
+
+Each feature follows the same flow: **api service → context → hook → page**. Pages never call Axios directly.
+
+All requests use `withCredentials: true`, because the API issues its session as an HTTP-only cookie. Set `VITE_API_URL` when the API is not on `http://localhost:3000`.
