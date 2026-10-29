@@ -1,15 +1,29 @@
 {
-  "name": "yt-genai",
+  "name": "kaizen-prep-api",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "REST API for Kaizen Prep — AI-generated interview reports, skill-gap analysis and tailored resume PDFs.",
+  "main": "server.js",
+  "type": "commonjs",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "npx nodemon server.js"
+    "start": "node server.js",
+    "dev": "node --watch server.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "interview-preparation",
+    "gemini",
+    "express",
+    "mongodb",
+    "resume"
+  ],
+  "author": "Tanisha Jaiswal",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TanishaJaiswal05/kaizen-prep.git"
+  },
+  "engines": {
+    "node": ">=20"
+  },
   "dependencies": {
     "@google/genai": "^1.52.0",
     "bcryptjs": "^3.0.3",

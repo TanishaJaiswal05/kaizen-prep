@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Kaizen Prep">
+  <rect width="64" height="64" rx="14" fill="#0d1117"/>
+  <path d="M18 16h7v13.5L37.5 16H46L32.3 31.2 46.5 48h-9.2L25 33.6V48h-7z" fill="#ff2d78"/>
+  <circle cx="47" cy="19" r="4" fill="#e6edf3"/>
+</svg>

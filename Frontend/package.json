@@ -1,13 +1,20 @@
 {
-  "name": "frontend",
+  "name": "kaizen-prep-web",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "React client for Kaizen Prep — AI interview reports, skill-gap analysis and tailored resume downloads.",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
+  },
+  "author": "Tanisha Jaiswal",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TanishaJaiswal05/kaizen-prep.git"
   },
   "dependencies": {
     "axios": "^1.21.0",
