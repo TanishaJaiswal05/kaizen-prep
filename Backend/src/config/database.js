@@ -1,16 +1,19 @@
-//used to connect server to database
+// Single responsibility: own the mongoose connection lifecycle.
 const mongoose = require("mongoose")
 
+const MONGO_URI = process.env.MONGO_URI
+
 async function connectToDB() {
-
-    try {
-        await mongoose.connect(process.env.MONGO_URI)
-
-        console.log("Connected to Database")
+    if (!MONGO_URI) {
+        throw new Error("MONGO_URI is not set. Copy .env.example to .env and fill it in.")
     }
-    catch (err) {
-        console.log(err)
-    }
+
+    mongoose.connection.on("error", (err) => {
+        console.error("MongoDB connection error:", err.message)
+    })
+
+    await mongoose.connect(MONGO_URI)
+    console.log("Connected to MongoDB")
 }
 
 module.exports = connectToDB
