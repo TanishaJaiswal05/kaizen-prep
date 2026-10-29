@@ -1,4 +1,4 @@
-.button{
+.button {
 
     border: none;
     outline: none;
@@ -6,15 +6,33 @@
     padding-block: 0.75rem;
     border-radius: 1rem;
     cursor: pointer;
+    font-family: inherit;
+    font-weight: 600;
 
     transition: all 0.3s ease-in-out;
 
-    &.primary-button{
+    &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+
+    &:active:not(:disabled) {
+        transform: scale(0.9);
+    }
+
+    &.primary-button {
         background-color: #e1034d;
         color: white;
     }
 
-    &:active{
-        transform: scale(0.9);
+    &.secondary-button {
+        background-color: transparent;
+        color: inherit;
+        border: 1px solid #2a3348;
+
+        &:hover {
+            border-color: #ff2d78;
+            color: #ff2d78;
+        }
     }
 }

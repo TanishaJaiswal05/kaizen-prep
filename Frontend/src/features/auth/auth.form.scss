@@ -15,6 +15,17 @@ main{
         gap: 1rem;
     }
 
+    .form-subtitle{
+        color: #7d8590;
+        font-size: 0.875rem;
+        line-height: 1.5;
+        margin-top: -0.5rem;
+    }
+
+    .form-error{
+        margin-top: -0.25rem;
+    }
+
     form{
         display: flex;
         flex-direction: column;

@@ -1,8 +1,8 @@
 @use "./style/button.scss";
 
 * {
-    margin: 0%;
-    padding: 0%;
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 
@@ -15,6 +15,72 @@ body,
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-.highlight{
+.highlight {
     color: #d20d3b;
+}
+
+.form-error {
+    color: #ff6b81;
+    font-size: 0.85rem;
+    line-height: 1.5;
+}
+
+// ── Loading ──────────────────────────────────────────────────────────────────
+.loading-screen {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    color: #7d8590;
+    font-size: 0.95rem;
+
+    &__spinner {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        border: 3px solid rgba(255, 255, 255, 0.12);
+        border-top-color: #ff2d78;
+        animation: spin 0.8s linear infinite;
+    }
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+// ── 404 ──────────────────────────────────────────────────────────────────────
+.not-found {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    text-align: center;
+    padding: 2rem;
+
+    &__code {
+        font-size: 3rem;
+        font-weight: 800;
+        color: #ff2d78;
+        line-height: 1;
+    }
+
+    h1 {
+        font-size: 1.35rem;
+    }
+
+    &__copy {
+        color: #7d8590;
+        font-size: 0.9rem;
+        max-width: 360px;
+        line-height: 1.6;
+        margin-bottom: 0.75rem;
+    }
 }
