@@ -6,6 +6,13 @@ const tokenBlacklistModel = require("../models/blacklist.model")
 
 const TOKEN_TTL = "1d"
 
+// Emails are stored lower-cased by the validator; matching case-insensitively
+// keeps accounts created before that rule working.
+function emailFilter(email) {
+    const escaped = email.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+    return new RegExp(`^${escaped}$`, "i")
+}
+
 const COOKIE_OPTIONS = {
     httpOnly: true,
     sameSite: "lax",
@@ -35,7 +42,7 @@ async function registerUserController(req, res) {
     const { username, email, password } = req.body
 
     const existingUser = await userModel.findOne({
-        $or: [{ username }, { email }],
+        $or: [{ username }, { email: emailFilter(email) }],
     })
 
     if (existingUser) {
@@ -68,7 +75,7 @@ async function registerUserController(req, res) {
 async function loginUserController(req, res) {
     const { email, password } = req.body
 
-    const user = await userModel.findOne({ email })
+    const user = await userModel.findOne({ email: emailFilter(email) })
 
     // Same response for "no such user" and "wrong password" so the endpoint
     // cannot be used to enumerate registered emails.
