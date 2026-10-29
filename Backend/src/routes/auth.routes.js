@@ -1,3 +1,5 @@
+//create routes for authentication (register, login, logout, get-me) 
+//api/auth 
 const { Router } = require('express')
 const authController = require("../controllers/auth.controller")
 const authMiddleware = require("../middlewares/auth.middleware")

@@ -1,6 +1,5 @@
+//used to connect server to database
 const mongoose = require("mongoose")
-
-
 
 async function connectToDB() {
 

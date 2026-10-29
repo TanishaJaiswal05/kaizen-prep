@@ -1,5 +1,5 @@
+//used to create schema for user model (for database)
 const mongoose = require("mongoose")
-
 
 const userSchema = new mongoose.Schema({
     username: {

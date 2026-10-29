@@ -1,5 +1,5 @@
 //used to start serverS
-require("dotenv").config()
+require("dotenv").config() //allows access to .env file
 const app = require("./src/app")
 const connectToDB = require("./src/config/database")
 
