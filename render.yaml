@@ -1,0 +1,29 @@
+# Render blueprint. Create a Blueprint instance from this repo and Render
+# provisions the service below; you then paste the secret env vars in the UI.
+# https://render.com/docs/blueprint-spec
+services:
+  - type: web
+    name: kaizen-prep
+    runtime: docker
+    # `free` is 512 MB and sleeps after 15 min idle. Chromium plus Node peaks
+    # around 300-400 MB during a PDF render, so switch to `starter` if
+    # downloads fail with an out-of-memory error.
+    plan: free
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      # Public URL of this service, e.g. https://kaizen-prep.onrender.com
+      - key: CLIENT_ORIGIN
+        sync: false
+      - key: MONGO_URI
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: GOOGLE_GENAI_API_KEY
+        sync: false
+      - key: GEMINI_MODEL
+        value: gemini-3-flash-preview
