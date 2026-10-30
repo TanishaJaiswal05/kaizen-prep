@@ -2,6 +2,8 @@
 
 **Kaizen Prep** turns a job description into a personalised interview strategy. Paste the role, add a resume (or describe yourself in a few lines), and get back a match score, the technical and behavioural questions you are likely to face, the skill gaps that matter, a day-by-day study plan, and a resume rewritten for that specific job.
 
+**Live demo:** <https://kaizen-prep.onrender.com> — sign in with `demo@gmail.com` / `demo12345`. It runs on Render's free plan, so the first request after 15 minutes idle takes about 50 seconds to wake.
+
 > _"Kaizen"_ — continuous, incremental improvement. The app is built around one loop: measure the gap, then close it.
 
 ---
@@ -129,6 +131,8 @@ The app ships as **one Docker image serving both the API and the built React app
 `Dockerfile` builds the client in one stage, then runs Express on a slim image with Chromium's system libraries and a non-root user. `Backend/src/app.js` serves `Frontend/dist` when it exists and falls back to `index.html` for client-side routes, so `/interview/:id` survives a refresh.
 
 ### Render
+
+The live instance runs on Render's free plan at <https://kaizen-prep.onrender.com>, deployed from the `main` branch through the Blueprint in `render.yaml`. Render follows the repository's default branch, so changes merged into `main` deploy automatically.
 
 1. Push the repo to GitHub.
 2. **New → Blueprint**, pick the repo. `render.yaml` defines the service, health check (`/api/health`) and env vars.
