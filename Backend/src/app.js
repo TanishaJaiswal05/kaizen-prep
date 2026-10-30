@@ -38,7 +38,7 @@ const clientIndex = path.join(CLIENT_DIST, "index.html")
 if (fs.existsSync(clientIndex)) {
     app.use(express.static(CLIENT_DIST))
 
-    // Client-side routes (/dashboard, /report/:id) resolve to the SPA shell.
+    // Client-side routes (/login, /interview/:id) resolve to the SPA shell.
     // /api/* is excluded so unknown endpoints still get the JSON 404 below.
     app.get(/^(?!\/api\/).*/, (req, res) => {
         res.sendFile(clientIndex)

@@ -18,6 +18,4 @@ const upload = multer({
     },
 })
 
-upload.MAX_FILE_SIZE = MAX_FILE_SIZE
-
 module.exports = upload
