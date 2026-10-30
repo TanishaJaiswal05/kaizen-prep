@@ -72,10 +72,11 @@
 
 ### 1. API
 
+Create `Backend/.env` with the variables below, then start the server:
+
 ```bash
 cd Backend
 npm install
-cp .env.example .env      # fill in the values below
 npm run dev               # node --watch server.js
 ```
 
@@ -88,6 +89,8 @@ npm run dev               # node --watch server.js
 | `GOOGLE_GENAI_API_KEY` | Gemini API key |
 | `GEMINI_MODEL` | Model id (default `gemini-3-flash-preview`) |
 
+Only `MONGO_URI`, `JWT_SECRET` and `GOOGLE_GENAI_API_KEY` are required; the rest have defaults.
+
 `npm install` downloads a Chromium build for Puppeteer (a few hundred MB). Set `PUPPETEER_SKIP_DOWNLOAD=true` if you already have a browser configured.
 
 ### 2. Web
@@ -95,27 +98,21 @@ npm run dev               # node --watch server.js
 ```bash
 cd Frontend
 npm install
-cp .env.example .env      # VITE_API_URL, defaults to http://localhost:3000
 npm run dev
 ```
+
+The client targets `http://localhost:3000` in development. To point it elsewhere, set `VITE_API_URL` in `Frontend/.env`.
 
 Open <http://localhost:5173>.
 
 ### 3. Demo account
 
-Create the demo account with the seed script (safe to re-run — it resets the password):
-
-```bash
-cd Backend
-npm run seed:demo
-```
+An existing account is available for trying the app without registering:
 
 | Field | Value |
 | --- | --- |
 | Email | `demo@gmail.com` |
 | Password | `demo12345` |
-
-Override with `DEMO_EMAIL`, `DEMO_PASSWORD` and `DEMO_USERNAME` if needed.
 
 > Demo credentials are for local exploration only — never reuse them in a deployed environment.
 
@@ -129,7 +126,7 @@ The app ships as **one Docker image serving both the API and the built React app
 - Puppeteer needs a real Chromium, which rules out serverless hosts;
 - report generation is a long synchronous request, not a serverless-shaped workload.
 
-`Dockerfile` builds the client in one stage, then runs Express on a slim image with Chromium's system libraries and a non-root user. `Backend/src/app.js` serves `Frontend/dist` when it exists and falls back to `index.html` for client-side routes, so `/dashboard` and `/report/:id` survive a refresh.
+`Dockerfile` builds the client in one stage, then runs Express on a slim image with Chromium's system libraries and a non-root user. `Backend/src/app.js` serves `Frontend/dist` when it exists and falls back to `index.html` for client-side routes, so `/interview/:id` survives a refresh.
 
 ### Render
 
@@ -143,11 +140,6 @@ The app ships as **one Docker image serving both the API and the built React app
    | `GOOGLE_GENAI_API_KEY` | Gemini key |
    | `CLIENT_ORIGIN` | the service URL, e.g. `https://kaizen-prep.onrender.com` |
 4. In Atlas, allow network access from `0.0.0.0/0` — Render's free tier has no static egress IP.
-5. Once deployed, seed the demo user from the Render **Shell**:
-
-   ```bash
-   npm run seed:demo
-   ```
 
 **Memory.** The free plan is 512 MB and sleeps after 15 minutes idle. Chromium plus Node peaks around 300–400 MB while rendering a PDF, so concurrent downloads may hit out-of-memory. Move to `starter` (no sleep) if that happens. Cold starts also make the first generation request slow.
 
@@ -213,9 +205,9 @@ Backend/
     controllers/
     services/ai.service.js  # Gemini calls + HTML → PDF
     routes/
-    scripts/                # seed-demo-user
 Frontend/
   src/
+    lib/api.js              # shared axios client (base URL + cookies)
     components/             # shared UI (LoadingScreen)
     pages/                  # NotFound
     features/auth           # context → hook → api → pages
@@ -232,7 +224,6 @@ render.yaml                 # Render blueprint
 | --- | --- | --- |
 | `Backend` | `npm run dev` | Start with `node --watch` |
 | `Backend` | `npm start` | Start once |
-| `Backend` | `npm run seed:demo` | Create/reset the demo account |
 | `Frontend` | `npm run dev` | Vite dev server |
 | `Frontend` | `npm run lint` | ESLint |
 | `Frontend` | `npm run build` | Production build |
