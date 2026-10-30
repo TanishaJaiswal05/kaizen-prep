@@ -5,7 +5,7 @@ const MONGO_URI = process.env.MONGO_URI
 
 async function connectToDB() {
     if (!MONGO_URI) {
-        throw new Error("MONGO_URI is not set. Copy .env.example to .env and fill it in.")
+        throw new Error("MONGO_URI is not set. Add it to Backend/.env (see the README).")
     }
 
     mongoose.connection.on("error", (err) => {

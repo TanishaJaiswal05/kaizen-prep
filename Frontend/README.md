@@ -6,9 +6,10 @@ React client for [Kaizen Prep](../README.md). Vite + React 19 + React Router 7, 
 
 ```bash
 npm install
-cp .env.example .env   # VITE_API_URL, defaults to http://localhost:3000
 npm run dev
 ```
+
+The client targets `http://localhost:3000` in development. Set `VITE_API_URL` in `Frontend/.env` to point it elsewhere.
 
 ## Scripts
 

@@ -1,3 +1,6 @@
+const fs = require("node:fs")
+const path = require("node:path")
+
 const express = require("express")
 const cookieParser = require("cookie-parser")
 const cors = require("cors")
@@ -25,6 +28,22 @@ app.get("/api/health", (req, res) => {
 
 app.use("/api/auth", authRouter)
 app.use("/api/interview", interviewRouter)
+
+// Single-origin deployment: the built React app is served from this same
+// process, so the session cookie stays first-party and no CORS is involved.
+// In local development there is no build, and Vite serves the app on :5173.
+const CLIENT_DIST = path.join(__dirname, "..", "..", "Frontend", "dist")
+const clientIndex = path.join(CLIENT_DIST, "index.html")
+
+if (fs.existsSync(clientIndex)) {
+    app.use(express.static(CLIENT_DIST))
+
+    // Client-side routes (/login, /interview/:id) resolve to the SPA shell.
+    // /api/* is excluded so unknown endpoints still get the JSON 404 below.
+    app.get(/^(?!\/api\/).*/, (req, res) => {
+        res.sendFile(clientIndex)
+    })
+}
 
 // Unknown routes
 app.use((req, res) => {

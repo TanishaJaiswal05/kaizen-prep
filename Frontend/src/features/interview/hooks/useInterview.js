@@ -46,38 +46,6 @@ export const useInterview = () => {
         }
     }
 
-    const getReportById = async (id) => {
-        setLoading(true)
-        setError(null)
-
-        try {
-            const data = await getInterviewReportById(id)
-            setReport(data.interviewReport)
-            return data.interviewReport
-        } catch (err) {
-            setError(toMessage(err, "Could not load this interview report."))
-            return null
-        } finally {
-            setLoading(false)
-        }
-    }
-
-    const getReports = async () => {
-        setLoading(true)
-        setError(null)
-
-        try {
-            const data = await getAllInterviewReports()
-            setReports(data.interviewReports)
-            return data.interviewReports
-        } catch (err) {
-            setError(toMessage(err, "Could not load your interview plans."))
-            return null
-        } finally {
-            setLoading(false)
-        }
-    }
-
     const downloadResume = async (id) => {
         const blob = await generateResumePdf({ interviewReportId: id })
         const url = window.URL.createObjectURL(new Blob([blob], { type: "application/pdf" }))
@@ -140,12 +108,9 @@ export const useInterview = () => {
     return {
         loading,
         error,
-        setError,
         report,
         reports,
         generateReport,
-        getReportById,
-        getReports,
         getResumePdf,
     }
 }

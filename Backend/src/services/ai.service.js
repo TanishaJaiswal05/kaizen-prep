@@ -105,7 +105,17 @@ async function generateResumeHtml({ resume, selfDescription, jobDescription }) {
 }
 
 async function createPdfFromHtml(htmlContent) {
-    const browser = await puppeteer.launch()
+    // Containers usually run as root with a small /dev/shm, where Chrome's
+    // sandbox and shared-memory defaults both fail. These flags are the
+    // standard fix and are harmless outside containers.
+    const browser = await puppeteer.launch({
+        args: [
+            "--no-sandbox",
+            "--disable-setuid-sandbox",
+            "--disable-dev-shm-usage",
+            "--disable-gpu",
+        ],
+    })
 
     try {
         const page = await browser.newPage()

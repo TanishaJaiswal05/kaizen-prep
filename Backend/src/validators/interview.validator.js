@@ -16,4 +16,4 @@ const generateReportSchema = z.object({
         .default(""),
 })
 
-module.exports = { generateReportSchema, MAX_TEXT_LENGTH }
+module.exports = { generateReportSchema }
